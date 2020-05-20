@@ -1,58 +1,71 @@
 var validate = require('validate.js')
 
-module.exports = exports = function(config) {
-    // Do something with config here
-    console.log(config)
+exports = module.exports = function (config) {
 
-         
-      validate.validators.myAsyncValidator = function(value) {
-        return new validate.Promise(function(resolve, reject) {
-          setTimeout(function() {
+ return (req,res,next)=>{
+
+    if(req.body==={}){
+      console.log("should run")
+      console.log("req.body", req.body)
+    }
+    if(req.params){
+
+      console.log("req.params", req.params)
+
+    }
+    var constraints = {
+
+      'x-user':{
+          email:true
+        }
+
+    }
+
+    validate.validators.headerValidator = (value)=> {
+
+        console.log("value from headerValidator",value)
+
+        ////console.log("MYASYNCVALIDATOR VALUE FOO",value)
+        return new validate.Promise( (resolve, reject)=> {
+        // setTimeout( ()=> {
+            // console.log("PROROFD",value==="foo")
+
             if (value === "foo") resolve();
             else resolve("is not foo");
-          }, 100);
+        // }, 100);
         });
-      };
-      
-      
-      var constraints = {
-          name: {myAsyncValidator: true},
-          from: {
-            email: true
-          }
-    }
-        , success = "The validations have passed"//alert.bind(this, "The validations passed")
-        , error = function(errors) {
-           // console.log(JSON.stringify(errors, null, 2));
-          };
-      
-      // Will call the success callback
-      validate.async(config, constraints).then((input)=>{
-          
-        if(input){
-           return input
-        }else{
-            console.log("SOOKSEEC")
-        }
-        
-       //return next()
-        //success, error);
-      }).catch((error)=>{
-        console.log("caught")
-        console.log("FALSE", error)
-        var results = {false:"FALSE",error:error}
+    };
 
-      }).finally((errors)=>{
+    validate.async(req, constraints).then((success) => {
 
-        console.log("FALSE")
+      if(success){
+
+            return next()
+
+      }
+
+    }).catch((error) => {
+
+    }).finally((errors) => {
+  /*
+                console.log('errors should be undefined..', errors)
+                setTimeout(()=>{
+
+                  return "hell"
 
 
-      })
-      
-      // Will call the error callback with {name: ["Name is not foo"]} as the first argument
-     // validate.async({name: "bar"}, constraints).then(success, error);
-  
-    return function(req, res, next) {
-  
-}
-}
+                },100)
+
+  */
+    })
+    ,success = "The val}idations have passed"//alert.bind(this, "The validations passed")
+    ,error = function (errors) {
+    };
+
+  }
+
+};
+
+
+
+
