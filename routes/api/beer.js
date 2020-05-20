@@ -7,17 +7,9 @@ const validationMiddleWare = require('../../zaid_modules/vc')
 var DB = require('nosql');
 var nosql = DB.load('./database/fridge.nosql');
 
-
 var options = {
     uri: 'https://api.punkapi.com/v2/beers?beer_name='
 };
-
-
-router.get('/bling', function (req, res) {
-
-    res.json("BLING")
-
-})
 
 router.post('/',validationMiddleWare, (req, res) => {
 
@@ -94,19 +86,7 @@ router.post('/',validationMiddleWare, (req, res) => {
   // res.json({success: false})
 })
 
-router.get('/api.punkapi.com/v2/beers/:beername'
-    , (req, res) => {
-
-        if (err) throw err;
-        if (!res) {
-            res.json({ success: false, message: "There was an error retrieving beer..." })
-        } else {
-            res.json({ success: true, message: "Beer has been found..", beer: beer })
-        }
-
-})
-
-router.put('/:name',validationMiddleWare, (req, res) => {
+router.get('/:name',validationMiddleWare, (req, res) => {
 
     console.log("hello",req.headers)
     options.uri='https://api.punkapi.com/v2/beers?beer_name='
@@ -188,7 +168,6 @@ router.put('/:name',validationMiddleWare, (req, res) => {
 
 
 })
-
 
 module.exports = router
 

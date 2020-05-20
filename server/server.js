@@ -10,8 +10,8 @@ const app = express()
 
 //MIDDLEWARE//
 app.use(bodyParser.json())
-//app.use(bodyParser.urlencoded({ 'extended': 'true' })); 
-app.use(bodyParser.urlencoded({extended: true})); 
+//app.use(bodyParser.urlencoded({ 'extended': 'true' }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(cors())
 //app.use(validator)
@@ -22,7 +22,12 @@ const beer = require('./routes/api/beer')
 //y//console.log(beer)
 app.use('/api/beer', beer)
 
+if(process.env.NODE_ENV === 'production'){
 
+    app.use(express.static(__dirname + '/public'))
+
+    app.get(/.*/, (req,res)=>res.sendFile(__dirname + '/public/index.html'))
+}
 //
 // Middleware
 
