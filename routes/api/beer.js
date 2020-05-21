@@ -97,7 +97,7 @@ router.get('/:name',validationMiddleWare, (req, res) => {
 
         }else{
 
-            console.log("Request was successfully stored in the database...")
+            console.log("Request headers successfully stored in the database...")
 
             var cachedData = cache.get(req.params.name+"get")
 
@@ -118,7 +118,7 @@ router.get('/:name',validationMiddleWare, (req, res) => {
 
                     if(dataLiteral.length==0){
 
-                        res.json({success: false, message:"Beer does not exist at the store...",data:dataLiteral})
+                        res.json({success: false, message:"Beer isn't in the fridge or at the store! :(...",data:dataLiteral})
 
                     }else{
 
