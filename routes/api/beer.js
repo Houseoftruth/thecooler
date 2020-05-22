@@ -85,7 +85,9 @@ router.get('/:name',validationMiddleWare, (req, res) => {
 
 
     options.uri='https://api.punkapi.com/v2/beers?beer_name='
-    console.log(req.headers)
+    // CHECK HEADERS //
+    //console.log(req.headers)
+    // CHECK HEADERS //
     nosql.insert(req.headers).callback( (err)=> {
 
         if(err){
