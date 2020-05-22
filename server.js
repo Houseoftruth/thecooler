@@ -15,7 +15,6 @@ app.use(cors())
 
 //MIDDLEWARE//
 
-
 const beer = require('./routes/api/beer')
 
 app.use('/api/beer', beer)
