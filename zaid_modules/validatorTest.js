@@ -7,8 +7,23 @@ exports = module.exports = function () {
   return (req, res, next, done) => {
 
 
-    validate.validators.headerValidator = (value) => {
+    var postRequirements = {
 
+      rating: { ratingValidator: true },
+      id: { idValidator: true },
+      'x-user': {
+        email: true
+      }
+
+    }
+    var putRequirements = {
+
+      'x-user': {
+        email: true
+      }
+
+    }
+    validate.validators.headerValidator = (value) => {
 
       return new validate.Promise((resolve, reject) => {
 
@@ -16,7 +31,10 @@ exports = module.exports = function () {
         else resolve("is not foo");
 
       });
+
     };
+    // ENSURE VALID X-USER EMAIL ADDRESS //
+
     validate.validators.idValidator = (idValue) => {
 
       return new validate.Promise((resolve, reject) => {
@@ -27,6 +45,8 @@ exports = module.exports = function () {
       });
 
     };
+    // ENSURE VALID ID VALUE //
+
     validate.validators.ratingValidator = (ratingValue) => {
 
       return new validate.Promise((resolve, reject) => {
@@ -38,46 +58,12 @@ exports = module.exports = function () {
       });
 
     };
+    // ENSURE VALID ID RATING //
 
-    //console.log(req.body.id)
-    if (req.body.id && req.body.rating) {
-      console.log("EHERE", req)
-      var requestObject = req.body
-      var postRequirements = {
-
-        rating: { ratingValidator: true },
-        id: { idValidator: true },
-        'x-user': {
-          email: true
-        }
-
-      }
-
-      validate.async(requestObject, postRequirements).then((success) => {
-
-        if (success) {
-
-          return done()
-
-        }
-
-      }).catch((error, done) => {
-
-        // console.log(error['x-user'][0])
-        console.log("Fail incoming...")
-
-      })
-
-    } else if (req.params.headers.name) {
+    if (req.params) {
 
       var requestObject = req.headers
-      var putRequirements = {
 
-        'x-user': {
-          email: true
-        }
-
-      }
       validatePut.async(requestObject, putRequirements).then((successObject) => {
 
         if (successObject) {
@@ -88,14 +74,34 @@ exports = module.exports = function () {
 
       }).catch((error, done) => {
 
-        // console.log(error['x-user'][0])
+        console.log(error['x-user'][0])
+        console.log("Fail incoming...")
+
+      })
+    }
+    if (req.body) {
+
+      var requestObject = req.body
+
+      validatePut.async(requestObject, postRequirements).then((successObject) => {
+
+        if (successObject) {
+
+          return done()
+
+        }
+
+      }).catch((error, done) => {
+
+        console.log(error['x-user'][0])
         console.log("Fail incoming...")
 
       })
     }
 
-  };
+
+
 
 };
 
-
+}
