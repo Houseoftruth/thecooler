@@ -6,38 +6,61 @@ const middleware = require('../zaid_modules/validatorTest')
 
 
 
+it('Done should be called (indicating a valid user email, id, and rating..)', (done) => {
+
+  var validationMiddleWare = middleware(/./);
+  var nextSpy = sinon.spy();
+
+
+  var passingPostTestObject = {
+
+    body:{
+      id:1,
+      rating:5,
+      'x-user':'foo@gmail.com'
+    },
+    'x-user': 'foo@gmail.com'
+
+  }
+
+
+  // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A PASSING TEST //
+
+  validationMiddleWare(passingPostTestObject, {}, nextSpy, done);
+
+
+});
+
 it('Done should be called (indicating a valid user email..)', (done) => {
 
   var validationMiddleWare = middleware(/./);
   var nextSpy = sinon.spy();
 
-  var failingHeaderVerificationTestObject = {
 
-    'x-user': 'foo@gmaicom'
-
-  }
-
-// INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
-
-  var failingHeaderVerificationTestObject2 = {
-
-    'x-user': 'foogmail.com'
-
-  }
 
 // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
 
 
-  var passingHeaderVerificationTestObject = {
+var passingPutTestObject = {
 
-    'x-user': 'foo@gmail.com'
-
-
+  params:{
+    headers:{
+      name:"Homer",
+      'x-user':'foo@gmail.com'
+    },
+    body:{
+      id:1
+    },
+    headers:{
+      'x-user':'foo@gmail.com'
+    }
   }
+}
+
 
   // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A PASSING TEST //
 
-  validationMiddleWare(passingHeaderVerificationTestObject, {}, nextSpy, done);
+  validationMiddleWare(passingPutTestObject, {}, nextSpy, done);
 
 
 });

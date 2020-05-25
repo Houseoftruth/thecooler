@@ -1,53 +1,103 @@
 var validate = require('validate.js')
+var validatePut = require('validate.js')
+
 
 exports = module.exports = function () {
 
- return (req,res,next,done)=>{
+  return (req, res, next, done) => {
+
+console.log(req.body)
+console.log(req.params)
+
+    validate.validators.headerValidator = (value) => {
 
 
-    var constraints = {
+      return new validate.Promise((resolve, reject) => {
 
-      'x-user':{
-          email:true
-        }
+        if (value === "foo") resolve();
+        else resolve("is not foo");
 
-    }
+      });
+    };
+    validate.validators.idValidator = (idValue) => {
 
-    validate.validators.headerValidator = (value)=> {
+      return new validate.Promise((resolve, reject) => {
 
-        console.log("value from headerValidator",value)
+        if (Number(idValue)) resolve();
+        else resolve(" is not a valid Id...");
 
-        ////console.log("MYASYNCVALIDATOR VALUE FOO",value)
-        return new validate.Promise( (resolve, reject)=> {
-        // setTimeout( ()=> {
-            // console.log("PROROFD",value==="foo")
+      });
 
-            if (value === "foo") resolve();
-            else resolve("is not foo");
-        // }, 100);
-        });
+    };
+    validate.validators.ratingValidator = (ratingValue) => {
+
+      return new validate.Promise((resolve, reject) => {
+
+        if (ratingValue == 1 || ratingValue == 2 || ratingValue == 3 ||
+          ratingValue == 4 || ratingValue == 5) resolve();
+        else resolve("is not a valid rating...rating must be from 1 to 5");
+
+      });
+
     };
 
-    validate.async(req, constraints).then((success) => {
+    console.log(req.body.id)
+    if (req.body.id && req.body.rating) {
+      console.log("EHERE", req)
+      var requestObject = req.body
+      var postRequirements = {
 
-      if(success){
-
-            return done()
+        rating: { ratingValidator: true },
+        id: { idValidator: true },
+        'x-user': {
+          email: true
+        }
 
       }
 
-    }).catch((error,done)=>{
+      validate.async(requestObject, postRequirements).then((success) => {
 
-        console.log(error['x-user'][0])
+        if (success) {
+
+          return done()
+
+        }
+
+      }).catch((error, done) => {
+
+        // console.log(error['x-user'][0])
         console.log("Fail incoming...")
 
-    })
+      })
 
+    } else if (req.params.headers.name) {
 
-  }
+      var requestObject = req.headers
+      var putRequirements = {
+
+        'x-user': {
+          email: true
+        }
+
+      }
+      validatePut.async(requestObject, putRequirements).then((successObject) => {
+
+        if (success) {
+
+          return done()
+
+        }
+
+      }).catch((error, done) => {
+
+        // console.log(error['x-user'][0])
+        console.log("Fail incoming...")
+
+      })
+    }
+
+  };
 
 };
-
-
 
 
