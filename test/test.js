@@ -1,7 +1,5 @@
 var sinon = require('sinon');
 const middleware = require('../zaid_modules/validatorTest')
-
-
 var validationMiddleWare = middleware(/./);
 var nextSpy = sinon.spy();
 
@@ -9,24 +7,30 @@ it('Done should be called (indicating a valid user email, id, and rating..)', (d
 
 
 
-  var passingPostTestObject = {
+    var passingPostTestObject = {
 
-    body:{
-      id:1,
-      rating:5,
-      'x-user':'foo@gmail.com'
+      body:{
+        id:1,
+        rating:5,
+        'x-user':'foo@gmail.com'
+      }
+
     }
 
-  }
-  var failingPostTestObject = {
+    // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A PASSING TEST //
 
-    body:{
-      id:1,
-      rating:5,
-      'x-user':'foogmail.com' // NO @ SYMBOL //
+    var failingPostTestObject = {
+
+      body:{
+        id:1,
+        rating:5,
+        'x-user':'foogmail.com' // NO @ SYMBOL //
+      }
+
     }
 
-  }
+    // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
+
   var failingPostTestObject2 = {
 
     body:{
@@ -37,55 +41,60 @@ it('Done should be called (indicating a valid user email, id, and rating..)', (d
 
   }
 
+  // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
 
-  // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A PASSING TEST //
 
-  validationMiddleWare(failingPostTestObject, {}, nextSpy, done);
+
+  validationMiddleWare(passingPostTestObject, {}, nextSpy, done);
 
 
 });
 
 it('Done should be called (indicating a valid user email..)', (done) => {
 
-// INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
 
-var passingPutTestObject = {
+  var passingPutTestObject = {
 
-  params:{
+    params:{
 
-    headers:{
-      name:"Homer",
-      'x-user':'foo@gmail.com'
+      headers:{
+        name:"Homer",
+        'x-user':'foo@gmail.com'
+      }
+
     }
-
   }
-}
-
-var failingPutTestObject = {
-
-  params:{
-
-    headers:{
-      name:"Homer",
-      'x-user':'foogmail.com' // NO @ SYMBOL (FAIL) //
-    }
-
-  }
-}
-var failingPutTestObject2 = {
-
-  params:{
-
-    headers:{
-      name:"Homer",
-      'x-user':'foo@gmailcom' // NO . SYMBOL (FAIL) //
-    }
-
-  }
-}
-
 
   // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A PASSING TEST //
+
+  var failingPutTestObject = {
+
+    params:{
+
+      headers:{
+        name:"Homer",
+        'x-user':'foogmail.com' // NO @ SYMBOL (FAIL) //
+      }
+
+    }
+  }
+
+  // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
+
+  var failingPutTestObject2 = {
+
+    params:{
+
+      headers:{
+        name:"Homer",
+        'x-user':'foo@gmailcom' // NO . SYMBOL (FAIL) //
+      }
+
+    }
+  }
+
+  // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
+
 
   validationMiddleWare(passingPutTestObject, {}, nextSpy, done);
 

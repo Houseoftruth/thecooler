@@ -1,5 +1,4 @@
 var validate = require('validate.js')
-var validatePut = require('validate.js')
 
 
 exports = module.exports = function () {
@@ -64,7 +63,7 @@ exports = module.exports = function () {
 
       var requestObject = req.headers
 
-      validatePut.async(requestObject, putRequirements).then((successObject) => {
+      validate.async(requestObject, putRequirements).then((successObject) => {
 
         if (successObject) {
 
@@ -83,7 +82,7 @@ exports = module.exports = function () {
 
       var requestObject = req.body
 
-      validatePut.async(requestObject, postRequirements).then((successObject) => {
+      validate.async(requestObject, postRequirements).then((successObject) => {
 
         if (successObject) {
 
