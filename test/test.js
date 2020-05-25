@@ -5,36 +5,14 @@ var sinon = require('sinon');
 const middleware = require('../zaid_modules/validatorTest')
 
 
+var validationMiddleWare = middleware(/./);
+var nextSpy = sinon.spy();
 
-it('Done should be called (indicating a valid user email, id, and rating..)', (done) => {
-
-  var validationMiddleWare = middleware(/./);
-  var nextSpy = sinon.spy();
-
-
-  var passingPostTestObject = {
-
-    body:{
-      id:1,
-      rating:5,
-      'x-user':'foo@gmail.com'
-    },
-    'x-user': 'foo@gmail.com'
-
-  }
-
-
-  // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A PASSING TEST //
-
-  validationMiddleWare(passingPostTestObject, {}, nextSpy, done);
-
-
-});
 
 it('Done should be called (indicating a valid user email..)', (done) => {
 
-  var validationMiddleWare = middleware(/./);
-  var nextSpy = sinon.spy();
+ // var validationMiddleWare = middleware(/./);
+  //var nextSpy = sinon.spy();
 
 
 

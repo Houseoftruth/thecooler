@@ -6,8 +6,6 @@ exports = module.exports = function () {
 
   return (req, res, next, done) => {
 
-console.log(req.body)
-console.log(req.params)
 
     validate.validators.headerValidator = (value) => {
 
@@ -41,7 +39,7 @@ console.log(req.params)
 
     };
 
-    console.log(req.body.id)
+    //console.log(req.body.id)
     if (req.body.id && req.body.rating) {
       console.log("EHERE", req)
       var requestObject = req.body
@@ -82,7 +80,7 @@ console.log(req.params)
       }
       validatePut.async(requestObject, putRequirements).then((successObject) => {
 
-        if (success) {
+        if (successObject) {
 
           return done()
 
