@@ -1,18 +1,10 @@
 var validate = require('validate.js')
 
-exports = module.exports = function (config) {
+exports = module.exports = function () {
 
- return (req,res,next)=>{
+ return (req,res,next,done)=>{
 
-    if(req.body==={}){
-      console.log("should run")
-      console.log("req.body", req.body)
-    }
-    if(req.params){
 
-      console.log("req.params", req.params)
-
-    }
     var constraints = {
 
       'x-user':{
@@ -40,27 +32,17 @@ exports = module.exports = function (config) {
 
       if(success){
 
-            return next()
+            return done()
 
       }
 
-    }).catch((error) => {
+    }).catch((error,done)=>{
 
-    }).finally((errors) => {
-  /*
-                console.log('errors should be undefined..', errors)
-                setTimeout(()=>{
+        console.log(error['x-user'][0])
+        console.log("Fail incoming...")
 
-                  return "hell"
-
-
-                },100)
-
-  */
     })
-    ,success = "The val}idations have passed"//alert.bind(this, "The validations passed")
-    ,error = function (errors) {
-    };
+
 
   }
 
