@@ -17,3 +17,7 @@ NPM RUN SERVE
 NPM RUN BUILD
 ```
 
+### RUN TEST
+```
+NPM TEST
+```
