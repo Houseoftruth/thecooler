@@ -17,11 +17,16 @@ it('Done should be called (indicating a valid user email..)', (done) => {
 
   }
 
+// INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
+
   var failingHeaderVerificationTestObject2 = {
 
     'x-user': 'foogmail.com'
 
   }
+
+// INSERT INTO VALIDATION MIDDLWARE TO CAUSE A FAILING TEST //
+
 
   var passingHeaderVerificationTestObject = {
 
@@ -30,7 +35,9 @@ it('Done should be called (indicating a valid user email..)', (done) => {
 
   }
 
-  validationMiddleWare(failingHeaderVerificationTestObject, {}, nextSpy, done);
+  // INSERT INTO VALIDATION MIDDLWARE TO CAUSE A PASSING TEST //
+
+  validationMiddleWare(passingHeaderVerificationTestObject, {}, nextSpy, done);
 
 
 });
