@@ -21,7 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "memory-cache": "^0.2.0",
-    "mocha": "^7.1.2",
+    "mocha": "^10.2.0",
     "mongodb": "^3.5.7",
     "nodemon": "^2.0.4",
     "nosql": "^6.1.0",
